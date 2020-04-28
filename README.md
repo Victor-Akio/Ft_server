@@ -4,12 +4,6 @@ This project consist in discovering the "docker" technology and use it to instal
 
 Also, it is important training of script production to optimze the execution of the server.
 
-CMD build:
-$> docker build -t name .
-
-CMD run:
-$> docker run --name aname -it -p 80:80 -p 443:443 name
-
 Utils : 
 - Web server with Nginx
 - SQL Database with MariaDB

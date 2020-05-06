@@ -11,6 +11,6 @@ RUN ["apt-get", "install", "default-mysql-server", "-y"]
 
 RUN ["apt-get", "clean"]
 
-COPY  ["start.sh", "/"]
+COPY  ["srcs/start.sh", "/"]
 
 ENTRYPOINT ["sh", "start.sh"]

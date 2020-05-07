@@ -4,7 +4,8 @@ FROM debian:buster
 #Copying files
 COPY srcs/start.sh ./
 COPY srcs/nginx.conf /etc/nginx/sites-available/localhost
-COPY srcs/php_config.php ./temp
+COPY srcs/config.inc.php /var
+COPY srcs/wp-config.php /var
 
 #Installing utilities
 RUN apt-get -y update

@@ -21,6 +21,15 @@ tar -xvf phpMyAdmin-5.0.2-all-languages.tar.gz
 mv phpMyAdmin-5.0.2-all-languages /var/www/localhost/phpmyadmin
 cp -pr ./config.sample.inc.php /var/www/localhost/phpmyadmin/config.inc.php
 
+# SSL CONFIG
+openssl req -x509 -nodes -days 365 \
+	-newkey rsa:2048 \
+	-subj "/C=BR/ST=Sao Paulo/L=Sao Paulo/OU=IT/CN=localhost" \
+	-keyout /etc/ssl/private/nginx-selfsigned.key \
+	-out /etc/ssl/certs/nginx-selfsigned.crt
+chmod 600 /etc/ssl/private/nginx-selfsigned.key /etc/ssl/certs/nginx-selfsigned.crt
+
+
 # remove files
 rm -rf phpMyAdmin-5.0.2-all-languages.tar.gz
 rm -f ./default.conf

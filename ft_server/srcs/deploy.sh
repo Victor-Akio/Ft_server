@@ -23,11 +23,20 @@ cp -pr ./config.sample.inc.php /var/www/localhost/phpmyadmin/config.inc.php
 
 # Import the create_tables.sql to create tables for phpMyAdmin.
 service mysql start
-# mysql < /var/www/localhost/phpmyadmin/sql/create_tables.sql -u root -p
-# Add the user and grant permission to phpMyAdmin’s database.
 # Add the user and grant permission to ALL databases *.*
-# test with mariadb -u 'user' -p
 echo "GRANT ALL PRIVILEGES ON *.* TO 'vscabell'@'localhost' IDENTIFIED BY '1234';"| mysql -u root
+echo "FLUSH PRIVILEGES;" | mysql -u root
+
+# install wordpress and configure
+# upload with the command wget -c https://wordpress.org/latest.tar.gz
+tar -xvf latest.tar.gz
+mv wp-config.php /wordpress/
+mv wordpress /var/www/localhost/
+
+# create user for database (same as wordpress wp-config.php)
+# database name | user name | password
+echo "CREATE DATABASE wordpress;" | mysql -u root
+echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'user'@'localhost' IDENTIFIED BY '1234';"| mysql -u root
 echo "FLUSH PRIVILEGES;" | mysql -u root
 
 # SSL CONFIG
@@ -39,7 +48,8 @@ openssl req -x509 -nodes -days 365 \
 chmod 600 /etc/ssl/private/nginx-selfsigned.key /etc/ssl/certs/nginx-selfsigned.crt
 
 # remove files
-rm -rf phpMyAdmin-5.0.2-all-languages.tar.gz
-rm -f ./default.conf
-rm -f ./config.sample.inc.php
-rm -f ./deploy.sh
+rm -rf phpMyAdmin-5.0.2-all-languages.tar.gz \
+	latest.tar.gz \
+	default.conf \
+	config.sample.inc.php \
+	deploy.sh \
